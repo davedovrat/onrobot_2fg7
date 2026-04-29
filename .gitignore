@@ -1,0 +1,5 @@
+# hidden files
+.*
+# configuration and parameter directories
+config/
+
