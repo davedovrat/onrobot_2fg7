@@ -58,7 +58,7 @@ The Grip Service forwards _twofg_grip_external_ requests to the XML-RPC server.
 To run:
 
  ```console
-ros2 run onrobot_2fg7 status
+ros2 run onrobot_2fg7 grip
  ```
 
 To send a request (using default variable values):
