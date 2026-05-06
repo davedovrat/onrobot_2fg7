@@ -16,8 +16,16 @@ ros2 launch onrobot_2fg7 onrobot_2fg7_launch.xml
 
 The Status Publisher periodically sends a _twofg_get_all_variables_ request to the 2FG7 XML-RPC server.
 
-```console
+To run:
+
+ ```console
 ros2 run onrobot_2fg7 status
+ ```
+
+to echo the published topic:
+
+```console
+ros2 topic echo /onrobot_2fg7_status
 ```
 
 ### Parameters
@@ -46,6 +54,14 @@ The parameter file should look like this:
 ## Grip Service
 
 The Grip Service forwards _twofg_grip_external_ requests to the XML-RPC server.
+
+To run:
+
+ ```console
+ros2 run onrobot_2fg7 status
+ ```
+
+To send a request (using default variable values):
 
 ```console
 ros2 service call /grip  onrobot_2fg7_interfaces/srv/Grip "{'gap': 60.0}"
