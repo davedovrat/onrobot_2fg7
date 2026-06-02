@@ -43,7 +43,7 @@ class StatusPublisher(rclpy.node.Node):
 		self.timer = self.create_timer(1/frequency, self.timer_callback)
 	
 	def timer_callback(self):
-		msg = Status()
+		msg = RgStatus()
 		msg.status = 1
 		try:
 			result = self._xmlrpc_proxy.twofg_get_all_variables(0)
