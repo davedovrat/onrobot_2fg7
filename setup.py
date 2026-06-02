@@ -29,7 +29,9 @@ setup(
     entry_points={
         'console_scripts': [
             'status = onrobot_2fg7.status:main',
-            'grip = onrobot_2fg7.grip:main'
+            'grip = onrobot_2fg7.grip:main',
+            'rg_status = onrobot_2fg7.rg_status:main',
+            'rg_grip = onrobot_2fg7.rg_grip:main'
         ],
     },
 )
