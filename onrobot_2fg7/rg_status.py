@@ -37,16 +37,16 @@ class StatusPublisher(rclpy.node.Node):
 		port = self.get_parameter('port').get_parameter_value().integer_value
 		frequency = self.get_parameter('frequency').get_parameter_value().double_value
 		queue_msgs = self.get_parameter('queue_msgs').get_parameter_value().integer_value
-		
+				
 		self._xmlrpc_proxy = xmlrpc.client.ServerProxy("http://" + ip + ":" + str(port) + "/")
 		self._publisher = self.create_publisher(RgStatus, 'onrobot_rg_status', queue_msgs)
 		self.timer = self.create_timer(1/frequency, self.timer_callback)
-	
+		
 	def timer_callback(self):
 		msg = RgStatus()
 		msg.status = 1
 		try:
-			result = self._xmlrpc_proxy.twofg_get_all_variables(0)
+			result = self._xmlrpc_proxy.rg_get_all_variables(0)
 			self.get_logger().debug('Result: "%s"' % result)
 			msg.angle = result['angle']
 			msg.angle_speed = result['angle_speed']
@@ -62,6 +62,16 @@ class StatusPublisher(rclpy.node.Node):
 			msg.speed = result['speed']
 			msg.status = result['status']
 			msg.width = result['width']
+		except KeyError as k:
+			self.get_logger().warn('Key error: "%s", probably received an empty response from server, check debug log for details.' % k)			
+		except xmlrpc.client.Fault as f:
+			self.get_logger().error('Server error: "%s"' % f)
+		except Exception as e:
+			self.get_logger().error('Error: "%s"' % e)
+		try:
+			result = self._xmlrpc_proxy.rg_get_grip_detected(0)
+			self.get_logger().debug('Result: "%s"' % result)
+			msg.grip_detected = result
 		except KeyError as k:
 			self.get_logger().warn('Key error: "%s", probably received an empty response from server, check debug log for details.' % k)			
 		except xmlrpc.client.Fault as f:
